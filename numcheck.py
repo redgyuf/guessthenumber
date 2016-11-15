@@ -7,9 +7,9 @@ def checkEven(randomNumber):
 
 def checkDivisible(input, randomNumber):
     if((randomNumber) % input == 0):
-        return True
+        print("It is divisible by {}.\n" .format(input))
     else:
-        return False
+        print("It is not divisible by {}.\n" .format(input))
 
 
 def checkPrime(randomNumber):

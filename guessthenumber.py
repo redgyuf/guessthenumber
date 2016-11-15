@@ -83,7 +83,7 @@ if __name__ == "__main__":
                 checkPrime(randomNumber)
                 numTries += 1
 
-            elif (userInput == r'[even,odd]'):
+            elif (userInput == ("even" or "odd")):
                 checkEven(randomNumber)
                 numTries += 1
 
@@ -106,6 +106,10 @@ if __name__ == "__main__":
                 quit()
 
             else:
-                print("Enter a number or an available command!")
+                print("          Enter a number or an available command!\n")
         else:
-            checkGuess(userInput, userName, numTries)
+            try:
+                int(userInput)
+                checkGuess(userInput, userName, numTries)
+            except ValueError:
+                print("          Enter a number or an available command!\n")
