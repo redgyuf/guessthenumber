@@ -1,13 +1,28 @@
 import os
 import random
 import sys
+import time
+from highscores import showHighscore, saveHighscore
+from numcheck import checkDivisible, checkEven, checkPrime
 
 
-def checkGuess(userInput, name, score):
+def checkGuess(userInput, name, numTries):
     if (int(userInput) == randomNumber):
         print("Your guess was right!")
-        saveHighscore(highscoreList, name, score)
         numTries += 1
+        print("Generating new number.\n")
+        for i in [3, 2, 1]:
+            print('{}\n' .format(i))
+            time.sleep(1)
+
+        saveHighscore(highscoreList, name, numTries)
+        generateNewNumber()
+        print('Done!\n Starting new game.')
+
+        for i in [0, 1, 2]:
+            print('.')
+            time.sleep(1)
+        os.system('clear')
 
     elif (int(userInput) > randomNumber):
         print("The number is smaller!")
@@ -16,34 +31,6 @@ def checkGuess(userInput, name, score):
     elif (int(userInput) < randomNumber):
         print("The number is bigger!")
         numTries += 1
-
-
-def showHighscore():
-    cache = list()
-    my_file = (open("highscore.txt", mode='r'))
-    for line in my_file:
-        cache.append(line.strip())
-    my_file.close()
-
-    print("Highscores: ")
-    for i in range(0, len(cache)):
-        print(cache[i])
-
-
-def saveHighscore(highscoreList, name, score):
-    my_file = (open("highscore.txt", mode='r'))
-
-    for line in my_file:
-        highscoreList.append(line.strip().split(': '))
-    my_file.close()
-
-    highscoreList.append([name, str(score)])
-    highscoreList.sort(key=lambda x: int(x[1]))
-
-    my_file = (open("highscore.txt", mode='w'))
-    for j in range(0, int(len(highscoreList))):
-        my_file.write(": ".join(highscoreList[j]) + "\n")
-    my_file.close()
 
 
 def generateNewNumber():
@@ -56,29 +43,6 @@ def surrender(random_num, numTries):
     print("The number of your tries: " + str(numTries))
     print('\nGenerating new number')
     os.system("eject cdrom")  # easteregg
-
-
-def checkEven(randomNumber):
-    if((randomNumber % 2) == 0):
-        print("It is even!")  # its even
-    else:
-        print("It is odd!")  # its odd
-
-
-def checkDivisible(input, randomNumber):
-    if((randomNumber) % input == 0):
-        return True
-    else:
-        return False
-
-
-def checkPrime(randomNumber):
-    primeList = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37,
-                 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
-    if randomNumber in primeList:
-        return True
-    else:
-        return False
 
 
 if __name__ == "__main__":
@@ -113,7 +77,19 @@ if __name__ == "__main__":
         if userInput.isalpha():
             # Help
             if (userInput == "help"):
-                userQuestion = input("\nAvailable helps: ").lower()
+                print("Available helps: prime - even/odd - divisible\n")
+
+            elif (userInput == 'prime'):
+                checkPrime(randomNumber)
+                numTries += 1
+
+            elif (userInput == r'[even,odd]'):
+                checkEven(randomNumber)
+                numTries += 1
+
+            elif (userInput == 'divisible'):
+                checkDivisible(int(input("Enter the divider: ")), randomNumber)
+                numTries += 1
 
             # Surrender
             elif (userInput == "surrender"):
