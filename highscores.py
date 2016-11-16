@@ -10,14 +10,14 @@ def showHighscore():
         print(cache[i])
 
 
-def saveHighscore(highscoreList, name, score):
+def saveHighscore(highscoreList, name, score, dif):
     my_file = (open("highscore.txt", mode='r'))
 
     for line in my_file:
         highscoreList.append(line.strip().split(': '))
     my_file.close()
 
-    highscoreList.append([name, str(score)])
+    highscoreList.append([name + dif, str(score)])
     highscoreList.sort(key=lambda x: int(x[1]))
 
     my_file = (open("highscore.txt", mode='w'))

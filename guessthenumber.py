@@ -1,28 +1,16 @@
-import os
 import random
+import os
 import sys
 import time
 from highscores import showHighscore, saveHighscore
 from numcheck import checkDivisible, checkEven, checkPrime
 
 
-def checkGuess(userInput, name, numTries):
+def checkGuess(userInput, numTries, randomNumber):
     if (int(userInput) == randomNumber):
         print("Your guess was right!")
         numTries += 1
         print("Generating new number.\n")
-        for i in [3, 2, 1]:
-            print('{}\n' .format(i))
-            time.sleep(1)
-
-        saveHighscore(highscoreList, name, numTries)
-        generateNewNumber()
-        print('Done!\n Starting new game.')
-
-        for i in [0, 1, 2]:
-            print('.')
-            time.sleep(1)
-        os.system('clear')
 
     elif (int(userInput) > randomNumber):
         print("The number is smaller!")
@@ -33,8 +21,14 @@ def checkGuess(userInput, name, numTries):
         numTries += 1
 
 
-def generateNewNumber():
-    randnumber = random.randint(0, 100)
+def restart_game(maxNumber):
+    print('\n Starting new game.')
+    randnumber = random.randint(0, maxNumber)
+
+    for i in [3, 2, 1]:
+        print('{}\n' .format(i))
+        time.sleep(1)
+
     return randnumber
 
 
@@ -42,11 +36,9 @@ def surrender(random_num, numTries):
     print("The number was: " + str(random_num))
     print("The number of your tries: " + str(numTries))
     print('\nGenerating new number')
-    os.system("eject cdrom")  # easteregg
 
 
-if __name__ == "__main__":
-
+def main():
     # Checks is there  file named 'highscore.txt', if not it creates a new one.
     if(os.path.exists("highscore.txt")):
         print("", end="")
@@ -58,7 +50,6 @@ if __name__ == "__main__":
     commandList = ["help", "surrender", "highscore", "exit"]
     questionList = ["prime", "even", "odd", "divisible"]
     highscoreList = list()
-    randomNumber = generateNewNumber()
     numTries = 0
 
     # Initialising starting screen
@@ -66,6 +57,11 @@ if __name__ == "__main__":
     print("Welcome in the GuessTheNumber game, where You have to guess the generated number (0 <= X < 100) to WIN")
     print("\n      ¯\(°_o)/¯\n")
     userName = input("Please enter your name: ") or "Unkown soldier"
+    difficulty = input(
+        "Enter difficulty level: noob - medium - hard: ").lower()
+    diff_dictionary = {'noob': 10, 'medium': 50, 'hard': 200}
+    randomNumber = restart_game(diff_dictionary[difficulty])
+
     print(randomNumber)
 
     # Main loop
@@ -94,7 +90,7 @@ if __name__ == "__main__":
             # Surrender
             elif (userInput == "surrender"):
                 surrender(randomNumber, numTries)
-                randomNumber = generateNewNumber()
+                randomNumber = restart_game(diff_dictionary[difficulty])
 
             # ShowHighscore
             elif (userInput == "highscore"):
@@ -110,6 +106,12 @@ if __name__ == "__main__":
         else:
             try:
                 int(userInput)
-                checkGuess(userInput, userName, numTries)
+                if (checkGuess(userInput, numTries, randomNumber) == 1):
+                    saveHighscore(highscoreList, userName,
+                                  numTries, difficulty)
             except ValueError:
                 print("          Enter a number or an available command!\n")
+
+
+if __name__ == "__main__":
+    main()
