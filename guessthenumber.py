@@ -54,18 +54,21 @@ def main():
         my_file = (open("highscore.txt", mode='w'))
         my_file.close()
 
-    # Declaring variables
-    commandList = ["help", "surrender", "highscore", "exit"]
-    questionList = ["prime", "even", "odd", "divisible"]
     highscoreList = list()
-    diff_dictionary = {'noob': 10, 'medium': 50, 'hard': 200}
     numTries = 0
+    randomNumber = restart_game(diff_dictionary[difficulty])
 
     # Initialising starting screen
     os.system('clear')
-    print("Welcome in the GuessTheNumber game, where You have to guess the generated number (0 <= X < 100) to WIN")
+    print("Welcome in the GuessTheNumber game, where You have to guess the generated number to WIN")
     print("\n      ¯\(°_o)/¯\n")
-    userName = input("Please enter your name: ") or "Unkown soldier"
+    userName = input(
+        "Please enter your name (max 16 characters): ") or "Unkown soldier"
+
+    if len(userName) > len("Unknown soldier"):
+        userName = "NemTudokOlvasni"
+
+    print("Hello Mr. {} :)" .format(userName))
 
     difficulty = input(
         "\nEnter difficulty level: noob - medium - hard - Versus Mode <vs>: ").lower()
@@ -75,30 +78,24 @@ def main():
 
     if (difficulty in diff_dictionary):
         pass
-
     else:
         print("So you are too stupid to spell the difficulties, Difficulty set to NOOB!")
         difficulty = "noob"
 
     if diff_dictionary[difficulty] == 0:
-        os.system('python3 aivsplayer.py')
-
-    randomNumber = restart_game(diff_dictionary[difficulty])
-
-    print(randomNumber)  # REMOVEEEEEEEEEEEEEEEEE
+        os.system('python3 aivsplayer.py')  # Start the AI vs Player program
 
     # Main loop
+    # This is where we wait for input and call the proper function based on it.
     while True:
-        print("Available commands: help - highscore - surrender - exit")
+        print("Available commands: highscore - surrender - exit")
+        print("Available helps: prime - even/odd - divisible\n")
         userInput = (input("\nEnter a your guess: ")).lower()
         os.system('clear')
 
         if userInput.isalpha():
 
-            if (userInput == "help"):
-                print("Available helps: prime - even/odd - divisible\n")
-
-            elif (userInput == 'prime'):
+            if (userInput == 'prime'):
                 checkPrime(randomNumber)
                 numTries += 1
 

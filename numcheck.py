@@ -22,5 +22,3 @@ def checkPrime(randomNumber):
             break
     else:
         print('Yes, it is a prime number.')
-
-checkPrime(22)

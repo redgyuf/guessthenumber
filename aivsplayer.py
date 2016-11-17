@@ -4,10 +4,11 @@ import time
 
 
 def main():
+
     os.system('clear')
     print('Think of a number between 0-100.')
     print("Available command:")
-    print("h if your number is higher, l if your number lower, y if the computer guess was right")
+    print("Type < h > if your number is higher, < l > if your number lower, < y > if the computer guess was right")
     numList = [x for x in range(101)]
     min_i = 0
     max_i = 100
@@ -22,19 +23,20 @@ def main():
                 print('Your number was: ', guess)
                 break
 
-            usrInput = input("Is it {}?".format(guess)).lower
+            usrInput = input("Is it {}? ".format(guess)).lower()
 
-            if usrInput == 'y':  # up-down arrow
+            if usrInput == 'y':
                 print('Your number was: ', guess)
                 break
 
-            elif usrInput == 'l':  # left arrow
+            elif usrInput == 'l':
                 max_i = guess - 1
 
-            elif usrInput == 'h':  # right arrow
+            elif usrInput == 'h':
                 min_i = guess + 1
             else:
                 print("Use l (lower) and h (higher) or y (Yes) keys.")
+
         except ValueError:
             print("Heeeey, don't cheat!")
             print("I don't play with cheaters")
