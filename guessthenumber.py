@@ -6,21 +6,18 @@ from highscores import showHighscore, saveHighscore
 from numcheck import checkDivisible, checkEven, checkPrime
 
 
-def checkGuess(userInput, numTries, randomNumber):
+def checkGuess(userInput, randomNumber):
 
     if (int(userInput) == randomNumber):
         print("Your guess was right!")
-        numTries += 1
         print("Generating new number.\n")
         return 1
 
     elif (int(userInput) > randomNumber):
         print("The number is smaller!")
-        numTries += 1
 
     elif (int(userInput) < randomNumber):
         print("The number is bigger!")
-        numTries += 1
 
 
 def restart_game(maxNumber):
@@ -127,8 +124,9 @@ def main():
         else:
             try:
                 int(userInput)
+                numTries += 1
 
-                if (checkGuess(userInput, numTries, randomNumber) == 1):
+                if (checkGuess(userInput, randomNumber) == 1):
                     saveHighscore(highscoreList, userName,
                                   numTries, difficulty)
                     time.sleep(3)
