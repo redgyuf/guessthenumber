@@ -28,7 +28,7 @@ def restart_game(maxNumber):
     print('\nStarting new game.')
     randnumber = random.randint(0, maxNumber)
 
-    for i in [3, 2, 1]:
+    for i in [5, 4, 3, 2, 1]:
         print('{}\n' .format(i))
         time.sleep(1)
 
@@ -56,7 +56,6 @@ def main():
 
     highscoreList = list()
     numTries = 0
-    randomNumber = restart_game(diff_dictionary[difficulty])
 
     # Initialising starting screen
     os.system('clear')
@@ -68,6 +67,7 @@ def main():
     if len(userName) > len("Unknown soldier"):
         userName = "NemTudokOlvasni"
 
+    os.system('clear')
     print("Hello Mr. {} :)" .format(userName))
 
     difficulty = input(
@@ -79,8 +79,12 @@ def main():
     if (difficulty in diff_dictionary):
         pass
     else:
+        os.system('clear')
         print("So you are too stupid to spell the difficulties, Difficulty set to NOOB!")
         difficulty = "noob"
+        time.sleep(3)
+
+    randomNumber = restart_game(diff_dictionary[difficulty])
 
     if diff_dictionary[difficulty] == 0:
         os.system('python3 aivsplayer.py')  # Start the AI vs Player program
@@ -127,6 +131,7 @@ def main():
                 if (checkGuess(userInput, numTries, randomNumber) == 1):
                     saveHighscore(highscoreList, userName,
                                   numTries, difficulty)
+                    time.sleep(3)
                     randomNumber = restart_game(diff_dictionary[difficulty])
 
             except ValueError:
