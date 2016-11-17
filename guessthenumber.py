@@ -105,8 +105,12 @@ def main():
                 numTries += 1
 
             elif (userInput == 'divisible'):
-                checkDivisible(int(input("Enter the divider: ")), randomNumber)
-                numTries += 1
+                try:
+                    checkDivisible(int(input("Enter the divider: ")), randomNumber)
+                    numTries += 1
+                except ValueError:
+                    os.system('clear')
+                    print("Még a számokat sem ismered?\n")
 
             elif (userInput == "surrender"):
                 surrender(randomNumber, numTries)
