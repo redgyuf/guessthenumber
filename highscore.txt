@@ -1,0 +1,3 @@
+NemTudokOlvasni (noob): 2
+Imi (medium): 2
+Unkown soldier (noob): 3
